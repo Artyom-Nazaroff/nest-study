@@ -14,7 +14,7 @@ export class MovieService {
   async findAll(): Promise<MovieEntity[]> {
     return await this.movieRepository.find({
       // where: {
-      //   isPublic: false,
+      //   isAvailable: false,
       // },
       order: {
         createdAt: 'desc',
@@ -26,7 +26,7 @@ export class MovieService {
     });
   }
 
-  async findById(id: number): Promise<MovieEntity> {
+  async findById(id: string): Promise<MovieEntity> {
     const movie = await this.movieRepository.findOne({
       where: {
         id,
@@ -42,14 +42,14 @@ export class MovieService {
     return await this.movieRepository.save(movie);
   }
 
-  async update(id: number, dto: MovieDto): Promise<MovieEntity> {
+  async update(id: string, dto: MovieDto): Promise<MovieEntity> {
     const movie = await this.findById(id);
     Object.assign(movie, dto);
     await this.movieRepository.save(movie);
     return movie;
   }
 
-  async delete(id: number): Promise<number> {
+  async delete(id: string): Promise<string> {
     const movie = await this.findById(id);
     await this.movieRepository.remove(movie);
     return movie.id;

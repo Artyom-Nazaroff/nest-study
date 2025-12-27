@@ -24,7 +24,7 @@ export class MovieController {
 
   @Get(':id')
   findById(@Param('id') id: string) {
-    return this.movieService.findById(+id);
+    return this.movieService.findById(id);
   }
 
   @Post()
@@ -34,11 +34,11 @@ export class MovieController {
 
   @Put(':id')
   update(@Param('id') id: string, @Body() dto: MovieDto) {
-    return this.movieService.update(+id, dto);
+    return this.movieService.update(id, dto);
   }
 
   @Delete(':id')
   delete(@Param('id') id: string) {
-    return this.movieService.delete(+id);
+    return this.movieService.delete(id);
   }
 }
