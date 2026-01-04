@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Body, Post } from '@nestjs/common';
 import { ActorService } from './actor.service';
 import { CreateActorDto } from './dto/create-actor.dto';
 

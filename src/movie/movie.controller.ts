@@ -7,7 +7,6 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import type { Request } from 'express';
 import { MovieService } from './movie.service';
 import { MovieDto } from './dto/movie.dto';
 

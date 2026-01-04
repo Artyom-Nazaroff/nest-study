@@ -1,26 +1,17 @@
-generator client {
-  provider = "prisma-client-js"
-}
-
-datasource db {
-  provider = "postgresql"
-  url      = env("POSTGRES_URI")
-}
-
 model Movie {
-  id          String       @id @default(uuid())
+  id          String      @id @default(uuid())
   title       String
   description String?
-  releaseYear Int          @map("release_year")
-  rating      Float        @default(0.0)
-  genre       Genre        @default(ACTION)
-  isAvailable Boolean      @default(false) @map("is_available")
-  createdAt   DateTime     @default(now()) @map("created_at")
-  updatedAt   DateTime     @updatedAt @map("updated_at")
-  reviews     Review[]     @relation("movie_reviews")
-  actors      Actor[]      @relation("movie_actors")
-  posterId    String?      @unique @map("poster_id")
-  poster      MoviePoster? @relation("MovieToPoster", fields: [posterId], references: [id])
+  releaseYear Int         @map("release_year")
+  rating      Float       @default(0.0)
+  genre       Genre       @default(ACTION)
+  isAvailable Boolean     @default(false) @map("is_available")
+  createdAt   DateTime    @default(now()) @map("created_at")
+  updatedAt   DateTime    @updatedAt @map("updated_at")
+  reviews     Review[]    @relation("movie_reviews")
+  actor       Actor[]     @relation("movie_actors")
+  posterId    String      @unique @map("poster_id")
+  poster      MoviePoster @relation(fields: [posterId], references: [id])
 
   @@map("movies")
 }
@@ -31,7 +22,8 @@ model MoviePoster {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  movie Movie? @relation("MovieToPoster")
+  movie   Movie? @relation
+  movieId String
 
   @@map("movie_posters")
 }
