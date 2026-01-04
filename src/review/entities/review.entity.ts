@@ -1,48 +1,39 @@
-import { MovieEntity } from 'src/movie/entities/movie.entity';
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+// import { MovieEntity } from 'src/movie/entities/movie.entity';
 
-@Entity({ name: 'reviews' })
-export class ReviewEntity {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+// @Entity({ name: 'reviews' })
+// export class ReviewEntity {
+//   @PrimaryGeneratedColumn('uuid')
+//   id: string;
 
-  @Column({
-    type: 'text',
-  })
-  text: string;
+//   @Column({
+//     type: 'text',
+//   })
+//   text: string;
 
-  @Column({
-    type: 'int',
-  })
-  rating: number;
+//   @Column({
+//     type: 'int',
+//   })
+//   rating: number;
 
-  @Column({
-    name: 'movie_id',
-    type: 'uuid',
-  })
-  movieId: string;
+//   @Column({
+//     name: 'movie_id',
+//     type: 'uuid',
+//   })
+//   movieId: string;
 
-  @ManyToOne(() => MovieEntity, (movie) => movie.reviews, {
-    onDelete: 'CASCADE',
-  })
-  @JoinColumn({ name: 'movie_id' })
-  movie: MovieEntity;
+//   @ManyToOne(() => MovieEntity, (movie) => movie.reviews, {
+//     onDelete: 'CASCADE',
+//   })
+//   @JoinColumn({ name: 'movie_id' })
+//   movie: MovieEntity;
 
-  @CreateDateColumn({
-    name: 'created_at',
-  })
-  createdAt: Date;
+//   @CreateDateColumn({
+//     name: 'created_at',
+//   })
+//   createdAt: Date;
 
-  @UpdateDateColumn({
-    name: 'updated_at',
-  })
-  updatedAt: Date;
-}
+//   @UpdateDateColumn({
+//     name: 'updated_at',
+//   })
+//   updatedAt: Date;
+// }

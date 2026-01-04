@@ -2,9 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MovieModule } from './movie/movie.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { getTypeormConfig } from './config/typeorm.config';
+import { ConfigModule } from '@nestjs/config';
 import { ReviewModule } from './review/review.module';
 import { ActorModule } from './actor/actor.module';
 
@@ -14,11 +12,6 @@ import { ActorModule } from './actor/actor.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-    }),
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: getTypeormConfig,
-      inject: [ConfigService],
     }),
     MovieModule,
     ReviewModule,
