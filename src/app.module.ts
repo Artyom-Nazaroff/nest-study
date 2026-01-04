@@ -18,6 +18,7 @@ import { PrismaModule } from './prisma/prisma.module';
     MovieModule,
     ReviewModule,
     ActorModule,
+    PrismaModule,
   ],
 })
 export class AppModule {}
