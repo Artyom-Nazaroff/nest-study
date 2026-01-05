@@ -4,7 +4,6 @@ import { ValidationPipe } from '@nestjs/common';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
 import { AllExceptionFilter } from './common/filters/all-exceptions.filter';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { MovieModule } from './movie/movie.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
