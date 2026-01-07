@@ -8,5 +8,9 @@ export function getJwtConfig(configService: ConfigService): JwtModuleOptions {
       // Используем симметричный алгоритм, т.к. секрет — строка, а не пара ключей
       algorithm: 'HS256',
     },
+    verifyOptions: {
+      algorithms: ['HS256'],
+      ignoreExpiration: false,
+    },
   };
 }
