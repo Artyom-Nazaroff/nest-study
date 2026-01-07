@@ -7,7 +7,6 @@ import {
   Post,
   Req,
   Res,
-  UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterRequest } from './dto/register.dto';
@@ -22,7 +21,8 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { AuthResponse } from './dto/auth.dto';
-import { AuthGuard } from '@nestjs/passport';
+import { Authorization } from './decorators/authorization.decorator';
+import { Authorized } from './decorators/authorized.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -89,10 +89,10 @@ export class AuthController {
     return this.authService.logout(res);
   }
 
-  @UseGuards(AuthGuard('jwt'))
+  @Authorization()
   @Get('me')
   @HttpCode(HttpStatus.OK)
-  me(@Req() req: Request) {
-    return req.user;
+  me(@Authorized('id') id: string) {
+    return { id };
   }
 }
