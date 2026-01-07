@@ -96,11 +96,25 @@ export class AuthService {
     this.setCookie(res, 'refreshToken', new Date(0));
   }
 
+  async validate(id: string) {
+    const user = await this.prismaService.user.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!user) {
+      throw new NotFoundException("This user hasn't found");
+    }
+
+    return user;
+  }
+
   async refresh(req: Request, res: Response) {
     const refreshToken = req.cookies['refreshToken'] as string;
 
     if (!refreshToken) {
-      throw new UnauthorizedException('Unauthorized');
+      throw new UnauthorizedException('Refresh token is not valid');
     }
 
     const payload: JwtPayload = await this.jwtService.verifyAsync(refreshToken);
