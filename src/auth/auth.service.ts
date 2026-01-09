@@ -6,15 +6,15 @@ import {
 } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { RegisterRequest } from './dto/register.dto';
 import { hash, verify } from 'argon2';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { type JwtPayload } from './interfaces/jwt.interface';
 import type { StringValue } from 'ms';
-import { LoginRequest } from './dto/login.dto';
 import type { Response, Request } from 'express';
 import { isDev } from 'src/utils/is-dev.util';
+import { RegisterInput } from './inputs/register.input';
+import { LoginInput } from './inputs/login.input';
+import { JwtPayload } from './interfaces/jwt.interface';
 
 @Injectable()
 export class AuthService {
@@ -38,7 +38,7 @@ export class AuthService {
 
   async register(
     res: Response,
-    dto: RegisterRequest,
+    dto: RegisterInput,
   ): Promise<Record<string, string>> {
     const { name, email, password } = dto;
 
@@ -63,10 +63,7 @@ export class AuthService {
     return this.auth(res, user.id);
   }
 
-  async login(
-    res: Response,
-    dto: LoginRequest,
-  ): Promise<Record<string, string>> {
+  async login(res: Response, dto: LoginInput): Promise<Record<string, string>> {
     const { email, password } = dto;
 
     const user = await this.prismaService.user.findUnique({
@@ -92,8 +89,9 @@ export class AuthService {
     return this.auth(res, user.id);
   }
 
-  logout(res: Response) {
-    this.setCookie(res, 'refreshToken', new Date(0));
+  logout(res: Response): boolean {
+    this.setCookie(res, '', new Date(0));
+    return true;
   }
 
   async validate(id: string) {
@@ -167,7 +165,7 @@ export class AuthService {
       domain: this.COOKIE_DOMAIN,
       expires,
       secure: !isDev(this.configService),
-      sameSite: isDev(this.configService) ? 'none' : 'lax',
+      sameSite: 'lax',
     });
   }
 }
